@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Polling</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/bootstrap-3.4.0/css/bootstrap.min.css}" />
+</head>
+<body>
+	<th:block th:include="/_header"></th:block>
+
+	<div class="container">
+		<div th:each="poll : ${polls} ">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<span th:utext="${poll.createdBy.name}"></span>
+					<i>@<span th:utext="${poll.createdBy.username}"></span></i><br>
+					<span th:utext="${poll.creationDateTime}"></span><br>
+					<strong><span th:utext="${poll.question}"></span></strong>
+				</div>
+				<div class="panel-body" th:each="choice : ${poll.choices}">
+					<div class="radio disabled">
+ 				 		<label><input type="radio" name="optradio" disabled><span th:utext="${choice.text}"></span> </label>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<th:block th:include="/_footer"></th:block>
+</body>
+</html>

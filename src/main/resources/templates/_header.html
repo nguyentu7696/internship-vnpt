@@ -1,0 +1,33 @@
+<nav class="navbar navbar-inverse" 
+>
+	<div class="container-fluid" xxmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> 
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">WebSiteName</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<!-- <li><a href="#">Home</a></li> -->
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+		
+			<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+				<li><a th:href="@{/create-poll}">Create Poll</a><li/>
+			</th:block>
+			
+			<th:block sec:authorize="isAuthenticated()">
+				<li><a th:href="@{/user/info}">info</a><li/>
+				<li><a th:href="@{/logout}">Logout</a></li>
+			</th:block>
+
+			<th:block sec:authorize="isAnonymous()">
+				<li><a th:href="@{/register-user}"> Register user</a></li>
+				<li><a th:href="@{/login}"> Login</a></li>
+			</th:block>
+			
+		</ul>
+
+
+
+	</div>
+</nav>
