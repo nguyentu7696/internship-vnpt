@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Polling</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/bootstrap-3.4.0/css/bootstrap.min.css}" />
+</head>
+<body>
+	<th:block th:include="/_header"></th:block>
+	<div class="container">
+		<h2>create poll</h2>
+		<form method="POST" th:object="${pollRequest}"
+			th:action="@{/update-poll}">
+
+			<div class="form-group">
+				<label for="question">question:</label> <input type="text"
+					class="form-control" id="question" placeholder="question"
+					name="question" th:value="${ pollRequest.getQuestion()}">
+			</div>
+
+			<th:block th:each="choice, itemChoice : ${pollRequest.choices} ">
+				<div class="form-group">
+					<label for="choice">choice:</label> <input type="text"
+						class="form-control" id="choice" placeholder="choice"
+						th:value="${choice.getText()}"
+						th:name="|choices[${itemChoice.index}].text|">
+				</div>
+
+			</th:block>
+
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+
+	<th:block th:include="/_footer"></th:block>
+</body>
+</html>

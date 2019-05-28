@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import com.tna.internship.entity.Choice;
 import com.tna.internship.entity.Poll;
 import com.tna.internship.entity.User;
 import com.tna.internship.entity.Vote;
+import com.tna.internship.playload.ChoiceRequest;
 import com.tna.internship.playload.ChoiceVoteCount;
 import com.tna.internship.playload.PollRequest;
 import com.tna.internship.playload.PollResponse;
@@ -97,6 +99,25 @@ public class PollService {
 		pollRequest.getChoices().forEach(choiceRequest -> poll.addChoice(new Choice(choiceRequest.getText())) );
 		
 		return pollRepository.save(poll);
+	}
+
+	public PollRequest getPollById(Long id) {
+		Optional<Poll> poll = pollRepository.findById(id);
+		if(poll.isPresent()) {
+			PollRequest pollRequest = new PollRequest();
+			pollRequest.setQuestion(poll.get().getQuestion());
+			
+			List<ChoiceRequest> choiceRequests = new ArrayList<>();
+			for (Choice choice : poll.get().getChoices()) {
+				ChoiceRequest choiceRequest = new ChoiceRequest();
+				choiceRequest.setText(choice.getText());
+				choiceRequests.add(choiceRequest);
+			}
+			pollRequest.setChoices(choiceRequests);
+			
+			return pollRequest;
+		}
+		return null;
 	}
 
 }

@@ -10,24 +10,31 @@
 	<th:block th:include="/_header"></th:block>
 
 	<div class="container">
-		<div th:each="poll : ${polls} ">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<span th:utext="${poll.createdBy.name}"></span>
-					<i>@<span th:utext="${poll.createdBy.username}"></span></i><br>
-					<span th:utext="${poll.creationDateTime}"></span><br>
-					<strong><span th:utext="${poll.question}"></span></strong>
-				</div>
-				<div class="panel-body" th:each="choice : ${poll.choices}">
-					<div class="radio disabled">
- 				 		<label><input type="radio" name="optradio" disabled><span th:utext="${choice.text}"></span> </label>
-					</div>
-				</div>
-			</div>
-
-		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>question</th>
+					<th>Choice 1</th>
+					<th>Choice 2</th>
+					<th>function</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="poll : ${polls} ">
+					<tr>
+						<td><span th:utext="${poll.createdBy.name}"></span> <i>@<span
+								th:utext="${poll.createdBy.username}"></span></i><br> <span
+							th:utext="${poll.creationDateTime}"></span><br> <strong><span
+								th:utext="${poll.question}"></span></strong></td>
+						<th:block th:each="choice : ${poll.choices}">
+							<td><span th:utext="${choice.text}"></span></td>
+						</th:block>
+						<td><a class="btn btn-primary" th:href="@{'/update-poll/' + ${poll.id} }" >edit</a></td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
 	</div>
-
 
 
 	<th:block th:include="/_footer"></th:block>
