@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,17 +40,22 @@ public class PollController {
 	}
 
 	@GetMapping("/create-poll")
-	public String showCreatePollPage(Model model, PollRequest pollRequest) {
+	public String showCreatePollPage(Model model) {
+		PollRequest pollRequest = new PollRequest();
 		for (int i = 1; i < 3; i++) {
 			pollRequest.addChoice(new ChoiceRequest());
 		}
-		model.addAttribute("pollresquest", pollRequest);
+		model.addAttribute("pollRequest", pollRequest);
 		return "createPoll";
 	}
 
-	@PostMapping("/create-poll")
-	public String createPoll(Model model, @Valid @ModelAttribute("pollRequest") PollRequest pollRequest) {
-		Poll poll = pollService.createPoll(pollRequest);
+	@RequestMapping( value = "/create-poll", method = RequestMethod.POST)
+	public String createPoll(Model model, @Valid PollRequest pollRequest) {
+		
+		System.out.println("pollRequest.getId(): " + pollRequest.getId());
+		
+		pollService.savePoll(pollRequest);
+		
 		return "redirect:/";
 	}
 
@@ -56,16 +63,6 @@ public class PollController {
 	public String showUpdatePoll(Model model, @PathVariable Long id) {
 		PollRequest pollRequest = pollService.getPollById(id);
 		model.addAttribute("pollRequest", pollRequest);
-		return "updatePoll";
+		return "createPoll";
 	}
-
-	@PostMapping("/update-poll")
-	public String updatePoll(ModelMap model, BindingResult result, @Valid @ModelAttribute("pollRequest") PollRequest pollRequest) {
-		if (result.hasErrors()) {
-			return "updatePoll";
-		}
-		Poll poll = pollService.createPoll(pollRequest);
-		return "redirect:/";
-	}
-
 }

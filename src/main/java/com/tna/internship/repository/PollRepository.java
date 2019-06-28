@@ -9,4 +9,5 @@ import com.tna.internship.entity.Poll;
 
 @Repository
 public interface PollRepository extends JpaRepository<Poll, Long>{
+	boolean existsById(Long id);
 }

@@ -9,6 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class PollRequest {
+	
+	private Long id;
+	
 	@NotBlank
 	@Size(max = 140)
 	private String question;
@@ -22,6 +25,16 @@ public class PollRequest {
 	@Valid
 	private PollLength pollLength;
 	
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getQuestion() {
 		return question;
 	}

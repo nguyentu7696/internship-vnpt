@@ -9,10 +9,16 @@
 <body>
 	<th:block th:include="/_header"></th:block>
 	<div class="container">
-		<h2>create poll</h2>
+		
 		<form method="POST" th:object="${pollRequest}"
 			th:action="@{/create-poll}">
-
+			
+			<div class="form-group">
+				<label for="id">question:</label> <input type="text" disabled
+					class="form-control" id="id" placeholder="id" name="id" 
+					th:field="*{id}" >
+			</div>
+			
 			<div class="form-group">
 				<label for="question">question:</label> <input type="text"
 					class="form-control" id="question" placeholder="question" name="question" 

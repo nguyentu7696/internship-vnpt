@@ -10,7 +10,7 @@
 	<th:block th:include="/_header"></th:block>
 	<div class="container">
 		<h2>create poll</h2>
-		<form method="POST" th:object="${pollRequest}"
+		<form method="PUT" th:object="${pollRequest}"
 			th:action="@{/update-poll}">
 
 			<div class="form-group">

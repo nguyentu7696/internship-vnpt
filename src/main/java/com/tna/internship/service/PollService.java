@@ -92,19 +92,24 @@ public class PollService {
 		return choiceVotesMap;
 	}
 
-	public Poll createPoll(PollRequest pollRequest) {
-		Poll poll = new Poll();
-		poll.setQuestion(pollRequest.getQuestion());
+	public void savePoll(PollRequest pollRequest) {
+
+		Poll newpoll = new Poll();
 		
-		pollRequest.getChoices().forEach(choiceRequest -> poll.addChoice(new Choice(choiceRequest.getText())) );
+		newpoll.setId(pollRequest.getId());
+
+		newpoll.setQuestion(pollRequest.getQuestion());
 		
-		return pollRepository.save(poll);
+		pollRequest.getChoices().forEach(choiceRequest -> newpoll.addChoice(new Choice(choiceRequest.getText())) );
+		
+		pollRepository.save(newpoll);
 	}
 
 	public PollRequest getPollById(Long id) {
 		Optional<Poll> poll = pollRepository.findById(id);
 		if(poll.isPresent()) {
 			PollRequest pollRequest = new PollRequest();
+			pollRequest.setId(id);
 			pollRequest.setQuestion(poll.get().getQuestion());
 			
 			List<ChoiceRequest> choiceRequests = new ArrayList<>();
